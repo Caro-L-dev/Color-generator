@@ -1,3 +1,20 @@
+// <script>
+// document.querySelector('.generator-btn')
+// .addEventListener('click', () => {
+//     for (let index = 0; index < color.length; index++) {
+//         color[index].generateHex();
+//     }
+// });
+
+// document.addEventListener('keypress', (event) => {
+//     if (event.code.toLowerCase() === 'space') {
+//         for (let index = 0; index < color.length; index ++) {
+//             color[index].generateHex();
+//         }
+//     }
+// })
+// </script>
+
 <template>
     <p>
         Press [
