@@ -6,7 +6,10 @@ export default {
   },
   data() {
     return {
-      value: '#000000',
+      value: '',
+      object: {
+        backgroundColor: this.value,
+      },
       color: this.colorProps
     }
 
@@ -14,21 +17,21 @@ export default {
   created: function() {
     this.changeColor();
 
-    document.addEventListener('keydown', event => {
+      document.addEventListener('keydown', event => {
       if(event.code === 'Space')this.changeColor();
     });
   },
-  watch: {
-    color: function(value) {
-      document.body.style.backgroundColor = value;
-    }
-  },
+     watch: {
+   color: function(value) {
+        document.body.style.backgroundColor = value;
+     }
+   },
   methods: {
     changeColor: function() {
       this.color = '#' + Math.floor(Math.random() * 6777215).toString(16);
     },
-    backgroundChange: function(newColor) {
-      this.color = newColor;
+    setColor: function(newColor) {
+     this.$emit('setColor', newColor);
     }
 
     }
@@ -39,9 +42,9 @@ export default {
 
 <template>
   <div class="color" v-bind:color="color">
-    <div class="color-content">
+    <div class="color-content" :style="{ backgroundColor: value }">
       <button class="lock-toggle fas fa-unlock-alt" />
-      <input type="text" class="color-input" value={{color}} />
+      <input type="text" class="color-input" :value='color' />
       <button class="copy-hex">Copy</button>
     </div>
   </div>

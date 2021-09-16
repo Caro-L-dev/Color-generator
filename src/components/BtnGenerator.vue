@@ -1,10 +1,17 @@
 <script>
 export default {
     name: 'BtnGenerator',
+    created: function() {
+    this.changeColor();
+
+    document.addEventListener('keydown', event => {
+      if(event.code === 'Space')this.changeColor();
+    });
+  },
     methods: {
         changeColor: function() {
-            return '#' + Math.floor(Math.random() * 6777215).toString(16);
-        }
+        this.color = '#' + Math.floor(Math.random() * 6777215).toString(16);
+        },
     }
 };
 </script>
@@ -15,7 +22,9 @@ export default {
         Press [
         <button
             class="generator-btn"
-            v-on:click="$emit('background-change', changeColor())">
+            v-on:click="$emit('color-content-change', changeColor())"
+            @click="changeColor"
+        >
             Space
         </button>
         ] to generate a new color palette.
