@@ -4,27 +4,32 @@ export default {
     return {
       color: '',
       value: '',
+      styleObject: {
+        backgroundColor: this.getRandomColor(),
+        transition: '0.4s ease-in-out',
+        color: 'red'
+      }
     }
   },
   created: function() {
-    this.changeColor();
-    this.setColor();
+    this.getRandomColor();
 
       document.addEventListener('keydown', event => {
-      if(event.code === 'Space') this.changeColor();
+      if(event.code === 'Space') this.getRandomColor();
     });
   },
    watch: {
      color: function(value) {
-     document.body.style.backgroundColor = value;
+         document.body.style.backgroundColor = value;
+    //  document.getElementsByClassName('color') = value;
      }
    },
   methods: {
-    changeColor: function() {
-    this.color = '#' + Math.floor(Math.random() * 6777215).toString(16);
+    getRandomColor: function() {
+    this.color = '#' + (Math.random().toString(16) + "000000").substring(2,8);
     },
-    setColor: function(newColor) {
-    this.$emit('setColor', newColor);
+    copyHex: function() {
+      document.execCommand("copy");
     }
   }
 };
@@ -37,7 +42,7 @@ export default {
          Press [
           <button
             class="generator-btn"
-            v-on:click="$emit('color-content-change', changeColor())"
+            v-on:click="$emit('color-content-change', getRandomColor())"
           >
           Space
           </button>]
@@ -47,10 +52,14 @@ export default {
       <div class="grid-color-box">
 
         <div class="color">
-          <div class="color-content">
+          <div class="color-content" v-bind:style="styleObject" >
             <button class="lock-toggle fas fa-unlock-alt" />
             <input type="text" class="color-input" :value='color' />
-            <button class="copy-hex">Copy</button>
+            <button class="copy-hex"
+                    v-on:click="$emit('color-content-copy', copyHex())"
+            >
+              Copy
+            </button>
           </div>
         </div>
 
