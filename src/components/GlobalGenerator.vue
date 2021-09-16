@@ -1,13 +1,13 @@
 <script>
 import HeaderGenerator from "./HeaderGenerator.vue";
-import SubtitleGenerator from "./SubtitleGenerator.vue";
+import BtnGenerator from "./BtnGenerator.vue";
 import Generator from "./Generator.vue";
 
 export default {
   name: "GlobalGenerator",
   components: {
     HeaderGenerator,
-    SubtitleGenerator,
+    BtnGenerator,
     Generator,
   },
 };
@@ -15,6 +15,6 @@ export default {
 
 <template>
   <header-generator />
-  <subtitle-generator />
+  <btn-generator />
   <generator />
 </template>

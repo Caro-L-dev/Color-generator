@@ -1,24 +1,23 @@
-// <script>
-// document.querySelector('.generator-btn')
-// .addEventListener('click', () => {
-//     for (let index = 0; index < color.length; index++) {
-//         color[index].generateHex();
-//     }
-// });
+<script>
+export default {
+    name: 'BtnGenerator',
+    methods: {
+        changeColor: function() {
+            return '#' + Math.floor(Math.random() * 6777215).toString(16);
+        }
+    }
+};
+</script>
 
-// document.addEventListener('keypress', (event) => {
-//     if (event.code.toLowerCase() === 'space') {
-//         for (let index = 0; index < color.length; index ++) {
-//             color[index].generateHex();
-//         }
-//     }
-// })
-// </script>
 
 <template>
     <p>
         Press [
-        <button class="generator-btn">Space</button>
+        <button
+            class="generator-btn"
+            v-on:click="$emit('background-change', changeColor())">
+            Space
+        </button>
         ] to generate a new color palette.
     </p>
 </template>
