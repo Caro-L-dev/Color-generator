@@ -25,3 +25,8 @@ npm run lint
 ```
 npm install -D sass-loader@^10 sass
 ```
+
+### Install dependencies
+```
+npm install clipboard --save
+```

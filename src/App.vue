@@ -3,32 +3,26 @@ export default {
   data() {
     return {
       color: '',
-      value: '',
-      styleObject: {
-        backgroundColor: this.getRandomColor(),
-        transition: '0.4s ease-in-out',
-        color: 'red'
-      }
     }
   },
   created: function() {
     this.getRandomColor();
 
-      document.addEventListener('keydown', event => {
-      if(event.code === 'Space') this.getRandomColor();
+    document.addEventListener('keydown', press => {
+      if(press.code === 'Space') this.getRandomColor();
     });
   },
-   watch: {
-     color: function(value) {
-         document.body.style.backgroundColor = value;
-    //  document.getElementsByClassName('color') = value;
-     }
-   },
+  watch: {
+    color: function(displayRandomColor) {
+      document.body.style.backgroundColor = displayRandomColor;
+      // document.getElementById("colorId").style.backgroundColor= displayRandomColor;
+    }
+  },
   methods: {
     getRandomColor: function() {
-    this.color = '#' + (Math.random().toString(16) + "000000").substring(2,8);
+      this.color = '#' + (Math.random().toString(16) + "000000").substring(2,8);
     },
-    copyHex: function() {
+    copyHexColorValue: function() {
       document.execCommand("copy");
     }
   }
@@ -38,32 +32,22 @@ export default {
 <template>
   <main>
       <h1 class="title">Color Generator</h1>
-      <p class="subtitle">
-         Press [
-          <button
-            class="generator-btn"
-            v-on:click="$emit('color-content-change', getRandomColor())"
-          >
-          Space
-          </button>]
+      <p class="subtitle"> Press [
+          <button class="generator-btn" v-on:click="$emit('color-item-change', getRandomColor())">Space</button>]
            to generate a new color palette.
       </p>
       <h4 class='title-two'>Generator</h4>
-      <div class="grid-color-box">
-
-        <div class="color">
-          <div class="color-content" v-bind:style="styleObject" >
-            <button class="lock-toggle fas fa-unlock-alt" />
-            <input type="text" class="color-input" :value='color' />
-            <button class="copy-hex"
-                    v-on:click="$emit('color-content-copy', copyHex())"
+      <div class="grid__color-item">
+          <div class="color-item">
+            <input type="text" class="color-item__hex-color-value" :value='color' />
+            <button class="copy__hex-color-value"
+              v-on:click="$emit('color-item__copied', copyHexColorValue())"
             >
               Copy
             </button>
           </div>
-        </div>
 
-      </div>
+        </div>
   </main>
 </template>
 
@@ -109,7 +93,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-.grid-color-box {
+.grid__color-item {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
 
@@ -122,8 +106,7 @@ export default {
   }
 }
 
-.color {
-  &-content {
+.color-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -134,24 +117,14 @@ export default {
     background-color: $dark-color;
     transition: 0.4s ease-out;
     border: 0.2rem solid transparent;
-  }
 
-  &-input {
-    text-align: center;
-  }
+    &__hex-color-value {
+      text-align: center;
+    }
 
-  &-copied {
-    border-color: red;
-  }
-}
-
-.lock-toggle {
-  opacity: 0.5;
-  transition: 0.4s;
-
-  &--is-locked {
-    opacity: 1;
-  }
+    &__copied {
+      border-color: red;
+    }
 }
 
 @media (min-width: $small-device) {
@@ -161,13 +134,13 @@ export default {
 }
 
 @media (min-width: $large-device) {
-  .color-content {
+  .color-item {
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .color-input {
+  .color-item__hex-color-value {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
